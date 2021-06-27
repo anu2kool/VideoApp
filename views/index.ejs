@@ -4,6 +4,7 @@
   <title>Home Page</title>
   <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.17/filerobot-image-editor.min.js"></script>
 </head>
 <body>
 
@@ -14,6 +15,7 @@
 <button id="stopbutton">Stop</button>
 <button id="snapshot">Take picture</button>
 <button id="flipimage">Flip</button>
+<button id="editor">Open Editor</button>
 <audio id="snapSound" src="snap.wav" preload = "auto"></audio>
 
 
@@ -38,16 +40,20 @@
       webcam.stop();
     });
 
+    
     $("#snapshot").click(function(){
-      var picture = webcam.snap();
-      console.log(picture);
+      let picture = webcam.snap();
+      const ImageEditor = new FilerobotImageEditor(callbacks:{onComplete});
+      ImageEditor.open(picture);
     });
+    const onComplete = function(newurl, file){
+      console.log("New",newurl);
+    };
 
     $("#flipimage").click(function(){
       webcam.flip();
       webcam.start(); 
     });
-
   });
 
 
